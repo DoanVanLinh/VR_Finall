@@ -20,6 +20,9 @@ public class InteractionObject : MonoBehaviour
         mesh = transform.GetChild(0);
         mesh.GetChild(1).GetComponent<MeshFilter>().mesh = mesh.GetChild(0).GetComponent<MeshFilter>().mesh;
         mesh.GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", hightLightColor);
+        mesh.GetChild(1).transform.localScale = mesh.GetChild(0).transform.localScale;
+        mesh.GetChild(1).transform.position = mesh.GetChild(0).transform.position;
+
     }
 
     // Update is called once per frame
