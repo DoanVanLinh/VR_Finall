@@ -20,14 +20,14 @@ public class HanhTrinhBus : MonoBehaviour
     private bool trangThaiCua; //true: mo, false:dong
     private bool tamDung;
     public bool[] dsGhe;
-
+    private float y;
 
 
     // Start is called before the first frame update
     void Start()
     {
         banhXe = new GameObject[6];
-
+        y = transform.position.y;
         soHanhTrinh = 0;
         soHanhTrinhDo = 0;
         trangThaiCua = false;
@@ -54,11 +54,16 @@ public class HanhTrinhBus : MonoBehaviour
     }
     private IEnumerator diChuyen()
     {
-        if (soHanhTrinh < diemDung.Length &&( trangThai == 1 ||trangThai==4))
+        //Xe chay
+        if (soHanhTrinh < diemDung.Length && (trangThai == 1 || trangThai == 4))
         {
+            //Lui xe
             if (soHanhTrinh == 0)
             {
-                transform.LookAt(vtPhu);
+                Quaternion targetRotation = Quaternion.LookRotation(vtPhu + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //transform.LookAt(vtPhu);
                 transform.position = Vector3.MoveTowards(transform.position, diemDung[soHanhTrinh].transform.position, Time.deltaTime * speed);
                 foreach (var item in banhXe)
                 {
@@ -72,7 +77,10 @@ public class HanhTrinhBus : MonoBehaviour
             }
             else if (soHanhTrinh == 1)
             {
-                this.transform.LookAt(vtPhu1);
+                Quaternion targetRotation = Quaternion.LookRotation(vtPhu1 + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //this.transform.LookAt(vtPhu1);
                 foreach (var item in banhXe)
                 {
                     item.transform.RotateAround(item.transform.position, item.transform.forward * 10f * Time.deltaTime * tocDoBanhXe, 10f);
@@ -84,21 +92,24 @@ public class HanhTrinhBus : MonoBehaviour
                     soHanhTrinh += 1;
                 }
             }
-            else if (soHanhTrinh == 2)
+            else if (soHanhTrinh == 2)//Tien xe
             {
                 foreach (var item in banhXe)
                 {
                     item.transform.RotateAround(item.transform.position, -item.transform.forward * 10f * Time.deltaTime * tocDoBanhXe, 10f);
 
                 }
-                this.transform.LookAt(diemDung[soHanhTrinh].transform);
+                Quaternion targetRotation = Quaternion.LookRotation(diemDung[soHanhTrinh].transform.position + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //this.transform.LookAt(diemDung[soHanhTrinh].transform);
                 transform.position = Vector3.MoveTowards(transform.position, diemDung[soHanhTrinh].transform.position, Time.deltaTime * speed);
                 if (Mathf.Abs(Vector3.Distance(diemDung[soHanhTrinh].transform.position, transform.position)) < 1)
                 {
                     soHanhTrinh += 1;
                 }
             }
-            else if (soHanhTrinh == 4)
+            else if (soHanhTrinh == 4)//Dung doi khach
             {
                 trangThai = 4;
                 tamDung = true;
@@ -124,7 +135,10 @@ public class HanhTrinhBus : MonoBehaviour
                     {
                         item.transform.RotateAround(item.transform.position, -item.transform.forward * 10f * Time.deltaTime * tocDoBanhXe, 10f);
                     }
-                    this.transform.LookAt(diemDung[soHanhTrinh].transform);
+                    Quaternion targetRotation = Quaternion.LookRotation(diemDung[soHanhTrinh].transform.position + Vector3.up * y - transform.position);
+                    Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                    //this.transform.LookAt(diemDung[soHanhTrinh].transform);
                     transform.position = Vector3.MoveTowards(transform.position, diemDung[soHanhTrinh].transform.position, Time.deltaTime * speed);
                     if (Mathf.Abs(Vector3.Distance(diemDung[soHanhTrinh].transform.position, transform.position)) < 1)
                     {
@@ -140,7 +154,10 @@ public class HanhTrinhBus : MonoBehaviour
                     item.transform.RotateAround(item.transform.position, -item.transform.forward * 10f * Time.deltaTime * tocDoBanhXe, 10f);
 
                 }
-                transform.LookAt(diemDung[soHanhTrinh].transform);
+                Quaternion targetRotation = Quaternion.LookRotation(diemDung[soHanhTrinh].transform.position + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //transform.LookAt(diemDung[soHanhTrinh].transform);
                 transform.position = Vector3.MoveTowards(transform.position, diemDung[soHanhTrinh].transform.position, Time.deltaTime * speed);
                 if (Mathf.Abs(Vector3.Distance(diemDung[soHanhTrinh].transform.position, transform.position)) < 1)
                 {
@@ -148,36 +165,43 @@ public class HanhTrinhBus : MonoBehaviour
                 }
             }
         }
-        if (soHanhTrinh == diemDung.Length)
+        if (soHanhTrinh == diemDung.Length)//Di het hanh trinh don khach
         {
             trangThai = 2;
             diemVeBaiDo[diemVeBaiDo.Length - 1].transform.position = diemDo.transform.position;
-            diChuyenDoXe();
+            StartCoroutine(diChuyenDoXe());
         }
     }
 
     public IEnumerator diChuyenDoXe()
     {
-        if (!trangThaiCua)
+        //Tro ve bai do
+        if (Mathf.Abs(Vector3.Distance(transform.position, diemDung[diemDung.Length - 1].transform.position)) <= 1)
         {
-            this.transform.GetChild(6).Rotate(0, 150, 0, Space.Self);
-            this.transform.GetChild(7).Rotate(0, -90, 0, Space.Self);
-            this.transform.GetChild(8).Rotate(0, 90, 0, Space.Self);
-            trangThaiCua = true;
-        }
-        yield return new WaitForSeconds(15);
-        if (trangThaiCua)
-        {
-            this.transform.GetChild(6).Rotate(0, -150, 0, Space.Self);
-            this.transform.GetChild(7).Rotate(0, 90, 0, Space.Self);
-            this.transform.GetChild(8).Rotate(0, -90, 0, Space.Self);
-            trangThaiCua = false;
+            if (!trangThaiCua)
+            {
+                this.transform.GetChild(6).Rotate(0, 150, 0, Space.Self);
+                this.transform.GetChild(7).Rotate(0, -90, 0, Space.Self);
+                this.transform.GetChild(8).Rotate(0, 90, 0, Space.Self);
+                trangThaiCua = true;
+            }
+            yield return new WaitForSeconds(15);
+            if (trangThaiCua)
+            {
+                this.transform.GetChild(6).Rotate(0, -150, 0, Space.Self);
+                this.transform.GetChild(7).Rotate(0, 90, 0, Space.Self);
+                this.transform.GetChild(8).Rotate(0, -90, 0, Space.Self);
+                trangThaiCua = false;
+            }
         }
         if (trangThai == 2 && soHanhTrinhDo < diemVeBaiDo.Length)
         {
             if (soHanhTrinhDo <= 1)
             {
-                transform.LookAt(vtPhu2);
+                Quaternion targetRotation = Quaternion.LookRotation(vtPhu2 + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //transform.LookAt(vtPhu2);
                 transform.position = Vector3.MoveTowards(transform.position, diemVeBaiDo[soHanhTrinhDo].transform.position, Time.deltaTime * speed);
                 foreach (var item in banhXe)
                 {
@@ -190,7 +214,10 @@ public class HanhTrinhBus : MonoBehaviour
             }
             else
             {
-                transform.LookAt(diemVeBaiDo[soHanhTrinhDo].transform);
+                Quaternion targetRotation = Quaternion.LookRotation(diemVeBaiDo[soHanhTrinhDo].transform.position + Vector3.up * y - transform.position);
+                Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
+                //transform.LookAt(diemVeBaiDo[soHanhTrinhDo].transform);
                 transform.position = Vector3.MoveTowards(transform.position, diemVeBaiDo[soHanhTrinhDo].transform.position, Time.deltaTime * speed);
                 foreach (var item in banhXe)
                 {
@@ -202,7 +229,7 @@ public class HanhTrinhBus : MonoBehaviour
                 }
             }
         }
-        if (soHanhTrinhDo == diemVeBaiDo.Length)
+        if (soHanhTrinhDo == diemVeBaiDo.Length)//Den bai do
         {
             soHanhTrinh = 0;
             soHanhTrinhDo = 0;

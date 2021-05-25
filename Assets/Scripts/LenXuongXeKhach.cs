@@ -10,7 +10,7 @@ public class LenXuongXeKhach : MonoBehaviour
     public GameObject[] dsDiemXuong;
     public GameObject[] dsDenDiemCho;
     public GameObject[] dsDiemLenBus;
-   
+
     private int i = 0;
     private int j = 0;
     private int k = 0;
@@ -27,7 +27,7 @@ public class LenXuongXeKhach : MonoBehaviour
         tgDoiSanh = UnityEngine.Random.Range(0f, 15f);
         trangThaiRdViTri = false;
         tocDoDiBo = (float)1.5;
-        
+
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class LenXuongXeKhach : MonoBehaviour
 
     private IEnumerator lenXuongXe()
     {
-
+        //Len bus
         if (viTriKhach == 1 && Mathf.Abs(Vector3.Distance(dsBus[viTriXeDangDi].transform.position, dsBus[viTriXeDangDi].diemDung[3].transform.position)) < 1)
         {
             if (k < dsDiemLenBus.Length)
@@ -79,8 +79,8 @@ public class LenXuongXeKhach : MonoBehaviour
                         do
                         {
                             rdViTriNgoi = UnityEngine.Random.Range(0, dsBus[viTriXeDangDi].transform.GetChild(11).transform.childCount - 1);
-                            tgDoiXuongXe = UnityEngine.Random.Range(0f, 6f);
-                            tgDoiSanh = UnityEngine.Random.Range(10f, 30f);
+                            tgDoiXuongXe = UnityEngine.Random.Range(0.1f, 6f);
+                            tgDoiSanh = UnityEngine.Random.Range(1f, 10f);
                         } while (dsBus[viTriXeDangDi].dsGhe[rdViTriNgoi]);
                         dsBus[viTriXeDangDi].dsGhe[rdViTriNgoi] = true;
                     }
@@ -100,6 +100,7 @@ public class LenXuongXeKhach : MonoBehaviour
                 }
             }
         }
+        //Lo bus
         if (viTriKhach == 1 && dsBus[viTriXeDangDi].trangThai == 1 && Mathf.Abs(Vector3.Distance(transform.position, dsBus[viTriXeDangDi].transform.GetChild(9).transform.position)) >= 0.2 && dsBus[viTriXeDangDi].soHanhTrinh == 4)
         {
             animator.SetInteger("State", 1);
@@ -108,6 +109,7 @@ public class LenXuongXeKhach : MonoBehaviour
             transform.Rotate(0, -120, 0, Space.Self);
             animator.SetInteger("State", -1);
         }
+        // Dang ngoi tren xe di
         if (viTriKhach == 2 && dsBus[viTriXeDangDi].trangThai == 1)
         {
             transform.rotation = dsBus[viTriXeDangDi].transform.GetChild(11).transform.GetChild(rdViTriNgoi).transform.rotation;
@@ -121,18 +123,20 @@ public class LenXuongXeKhach : MonoBehaviour
             }
             transform.position = dsBus[viTriXeDangDi].transform.GetChild(11).transform.GetChild(rdViTriNgoi).transform.position;
         }
+        //Xuong xe bus
         if (viTriKhach == 2 && dsBus[viTriXeDangDi].trangThai == 2)
         {
             animator.SetInteger("State", 3);
-            if (rdViTriNgoi>9 &&rdViTriNgoi<14)
+            if (rdViTriNgoi > 9 && rdViTriNgoi < 14)
             {
-                transform.position=dsBus[viTriXeDangDi].transform.GetChild(11).transform.GetChild(rdViTriNgoi).transform.position+new Vector3(0,0,20);
+                transform.position = dsBus[viTriXeDangDi].transform.GetChild(11).transform.GetChild(rdViTriNgoi).transform.position + new Vector3(0, 0, 5);
             }
             dsBus[viTriXeDangDi].dsGhe[rdViTriNgoi] = false;
             yield return new WaitForSeconds(tgDoiXuongXe);
             transform.position = dsBus[viTriXeDangDi].transform.GetChild(10).transform.position;
             viTriKhach = 3;
         }
+        //Di chuyen ve sanh cho
         if (viTriKhach == 3)
         {
             animator.SetInteger("State", 1);
@@ -163,6 +167,7 @@ public class LenXuongXeKhach : MonoBehaviour
                 trangThaiRdViTri = true;
             }
         }
+        //Doi o sanh
         if (viTriKhach == 4)
         {
             yield return new WaitForSeconds(tgDoiSanh);
@@ -174,7 +179,7 @@ public class LenXuongXeKhach : MonoBehaviour
             if (j < dsDenDiemCho.Length - 1)
             {
                 transform.LookAt(dsDenDiemCho[j].transform);
-                transform.position = Vector3.MoveTowards(transform.position, dsDenDiemCho[j].transform.position, Time.deltaTime * tocDoDiBo);
+                transform.position = Vector3.MoveTowards(transform.position, dsDenDiemCho[j].transform.position, Time.deltaTime*tocDoDiBo);
                 if (Mathf.Abs(Vector3.Distance(transform.position, dsDenDiemCho[j].transform.position)) < 0.2)
                 {
                     j++;
