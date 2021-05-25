@@ -103,8 +103,8 @@ public class BusManager : MonoBehaviour
                 dem++;
             }
             if (t.GetComponent<HanhTrinhBus>().trangThai == 1 || t.GetComponent<HanhTrinhBus>().trangThai == 4)
-                   dem++;
-            if (dem==2)
+                dem++;
+            if (dem == 2)
             {
                 return true;
             }
