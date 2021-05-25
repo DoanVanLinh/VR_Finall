@@ -152,7 +152,7 @@ public class HanhTrinhBus : MonoBehaviour
         {
             trangThai = 2;
             diemVeBaiDo[diemVeBaiDo.Length - 1].transform.position = diemDo.transform.position;
-            StartCoroutine(diChuyenDoXe());
+            diChuyenDoXe();
         }
     }
 
