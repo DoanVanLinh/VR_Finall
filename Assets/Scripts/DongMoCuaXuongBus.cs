@@ -32,8 +32,8 @@ public class DongMoCuaXuongBus : MonoBehaviour
         }
         if (trangThaiCua && kichHoat)
         {
-            bus.transform.GetChild(7).Rotate(0, -90, 0, Space.Self);
-            bus.transform.GetChild(8).Rotate(0, 90, 0, Space.Self);
+            bus.transform.GetChild(7).Rotate(0, -90, 0, Space.Self);//xuay canh cua trai voi goc -90
+            bus.transform.GetChild(8).Rotate(0, 90, 0, Space.Self);//xoay canh cau phai voi goc 90
             kichHoat = false;
         }
         else if (!trangThaiCua && kichHoat)

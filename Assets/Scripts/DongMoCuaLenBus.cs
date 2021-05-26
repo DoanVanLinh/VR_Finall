@@ -23,20 +23,20 @@ public class DongMoCuaLenBus : MonoBehaviour
     }
     private void dongMoCua()
     {
-        if (khoaCua.IsPushing)
+        if (khoaCua.IsPushing)//Khi an vao khoa cua
         {
-            trangThaiCua = !trangThaiCua;
-            kichHoat = true;
+            trangThaiCua = !trangThaiCua;//Neu dang dong thi thanh mo, dang mo thi thanh dong
+            kichHoat = true;//khi an nut
             khoaCua.IsPushing = false;
         }
-        if (trangThaiCua && kichHoat)
+        if (trangThaiCua && kichHoat)//Khi can mo cua va da an nut khoa cua
         {
-            bus.transform.GetChild(6).Rotate(0, 120, 0, Space.Self);
+            bus.transform.GetChild(6).Rotate(0, 120, 0, Space.Self);//thuc hien xoay canh cua quanh truc voi goc 120
             kichHoat = false;
         }
-        else if (!trangThaiCua && kichHoat)
+        else if (!trangThaiCua && kichHoat)//khi can dong cua va da an nut khoa cua
         {
-            bus.transform.GetChild(6).Rotate(0, -120, 0, Space.Self);
+            bus.transform.GetChild(6).Rotate(0, -120, 0, Space.Self);//thuc hien xuat canh cua quanh truc voi goc -120
             kichHoat = false;
         }
     }

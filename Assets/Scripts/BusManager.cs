@@ -7,7 +7,7 @@ public class BusManager : MonoBehaviour
 {
     public GameObject[] dsBus;
     private int rdIndex = -1;
-    private Vector3 vtDichChuyenDiem1 = new Vector3(13, 0, -3);
+    private Vector3 vtDichChuyenDiem1 = new Vector3(13, 0, -5);
     private Vector3 vtDichChuyenDiem2 = new Vector3(0, 0, -10);
     private int indexDangTraKhach;
     // Start is called before the first frame update
