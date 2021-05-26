@@ -25,10 +25,13 @@ public class QuanLiGhe : MonoBehaviour
         { 
             player.transform.parent = null;
             isSit = false;
+            iObj.IsPushing = false;
+            iObj.IsTouching = false;
+
         }
-            
-        
-        
+
+
+
     }
     private void LateUpdate()
     {

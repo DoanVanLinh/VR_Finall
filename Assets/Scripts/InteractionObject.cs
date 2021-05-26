@@ -30,6 +30,7 @@ public class InteractionObject : MonoBehaviour
     {
         if (isTouching&&(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
                 isPushing = true;
+        mesh.GetChild(1).gameObject.SetActive(IsTouching);
     }
 
 }
