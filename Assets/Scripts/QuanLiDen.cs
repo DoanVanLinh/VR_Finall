@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class QuanLiDen : MonoBehaviour
 {
-    public GameObject[] dens;
+    public GameObject[] dens;//danh sach cac den can bat/tat
 
     private InteractionObject CongTac;
-    public Material[] materials;
+    public Material[] materials;//chat lieu cua bong den (bat/tat)
     private bool isOn;
 
     void Start()
@@ -24,15 +24,15 @@ public class QuanLiDen : MonoBehaviour
     }
     void OnOff()
     {
-        if (CongTac.IsPushing)
+        if (CongTac.IsPushing)//khi an cong tac
         {
-            isOn = !isOn;
+            isOn = !isOn;//dang bat thanh tat, dang tat thanh bat
             CongTac.IsPushing = false;
         }
-        foreach (GameObject item in dens)
+        foreach (GameObject item in dens)//duyet qua danh sach cac den
         {
-            if(isOn)
-                item.GetComponent<MeshRenderer>().materials[0].CopyPropertiesFromMaterial(materials[0]);
+            if(isOn)//neu dang muon bat
+                item.GetComponent<MeshRenderer>().materials[0].CopyPropertiesFromMaterial(materials[0]);//thuc hien bat
             else
                 item.GetComponent<MeshRenderer>().materials[0].CopyPropertiesFromMaterial(materials[1]);
         }
