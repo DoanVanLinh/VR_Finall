@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+
 public class XeKhach : MonoBehaviour
 {
 
@@ -32,13 +32,14 @@ public class XeKhach : MonoBehaviour
     }
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
         
 
     }
     private void LateUpdate()
     {
         StartCoroutine(DoiKhach());
+        transform.position = new Vector3(transform.position.x, y, transform.position.z);
+
     }
     IEnumerator DoiKhach()
     {
@@ -57,7 +58,7 @@ public class XeKhach : MonoBehaviour
             yield return new WaitForSeconds(diemDoi[diem].delay);
             doiKhach = false;
         }
-        TrangThai();
+        //TrangThai();
         if (diChuyen)
             DiChuyen();
     }
@@ -94,7 +95,7 @@ public class XeKhach : MonoBehaviour
         Quaternion targetRotation2 = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime*speed/3f);
         transform.position = Vector3.MoveTowards(transform.position, hanhTrinh[diemHienTai].position, Time.deltaTime * speed);
-        if (Vector3.Distance(transform.position, hanhTrinh[diemHienTai].position) <= 01f)
+        if (Vector3.Distance(transform.position, hanhTrinh[diemHienTai].position) <= 0.1f)
         {
             diemHienTai++;
         }
@@ -106,7 +107,7 @@ public class XeKhach : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation2, Time.deltaTime * speed / 3f);
         //transform.LookAt(new Vector3(hanhTrinh[diemHienTai - 1].position.x,y, hanhTrinh[diemHienTai - 1].position.z));
         transform.position = Vector3.MoveTowards(transform.position, hanhTrinh[diemHienTai].position, Time.deltaTime * speed);
-        if (Vector3.Distance(transform.position, hanhTrinh[diemHienTai].position) <= 01f)
+        if (Vector3.Distance(transform.position, hanhTrinh[diemHienTai].position) <= 0.1f)
         {
             diemHienTai++;
         }

@@ -18,11 +18,13 @@ public class InteractionObject : MonoBehaviour
     void Start()
     {
         mesh = transform.GetChild(0);
-        mesh.GetChild(1).GetComponent<MeshFilter>().mesh = mesh.GetChild(0).GetComponent<MeshFilter>().mesh;
-        mesh.GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", hightLightColor);
-        mesh.GetChild(1).transform.localScale = mesh.GetChild(0).transform.localScale;
-        mesh.GetChild(1).transform.position = mesh.GetChild(0).transform.position;
-
+        if (mesh.childCount > 1)
+        {
+            mesh.GetChild(1).GetComponent<MeshFilter>().mesh = mesh.GetChild(0).GetComponent<MeshFilter>().mesh;
+            mesh.GetChild(1).GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", hightLightColor);
+            mesh.GetChild(1).transform.localScale = mesh.GetChild(0).transform.localScale;
+            mesh.GetChild(1).transform.localPosition = mesh.GetChild(0).transform.localPosition;
+        }
     }
 
     // Update is called once per frame
@@ -30,7 +32,8 @@ public class InteractionObject : MonoBehaviour
     {
         if (isTouching&&(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
                 isPushing = true;
-        mesh.GetChild(1).gameObject.SetActive(IsTouching);
+        if(mesh.childCount>1)
+            mesh.GetChild(1).gameObject.SetActive(IsTouching);
     }
 
 }

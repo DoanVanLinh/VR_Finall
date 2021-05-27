@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class LaiXe : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float speed;
+    public float smooth;
     void Start()
     {
         this.enabled = false;
@@ -20,12 +21,12 @@ public class LaiXe : MonoBehaviour
     private void DiChuyen()
     {
         if (Input.GetKey(KeyCode.UpArrow))
-            transform.position += transform.forward * Time.deltaTime * 10f;
+            transform.position += transform.forward * Time.deltaTime * speed;
         if (Input.GetKey(KeyCode.DownArrow))
-            transform.position -= transform.forward * Time.deltaTime * 10f;
+            transform.position -= transform.forward * Time.deltaTime * speed;
         if (Input.GetKey(KeyCode.RightArrow))
-            transform.Rotate(Vector3.up, Time.deltaTime * 10f, Space.World);
+            transform.Rotate(Vector3.up, Time.deltaTime * smooth, Space.World);
         if (Input.GetKey(KeyCode.LeftArrow))
-            transform.Rotate(Vector3.up, -Time.deltaTime * 10f, Space.World);
+            transform.Rotate(Vector3.up, -Time.deltaTime * smooth, Space.World);
     }
 }

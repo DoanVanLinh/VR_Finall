@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BanhXe
   - HanhTrinh
+  - TayTrai
+  - TayPhai
   layers:
   - Default
   - TransparentFX
